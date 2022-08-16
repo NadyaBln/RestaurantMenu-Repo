@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantMenu_BusinessLogic.Services;
+using RestaurantMenu_DataAccess;
 using RestaurantMenu_Entities.Entities;
+using RestaurantMenu_Entities.Mapping;
+using RestaurantMenu_WebApi.Models;
 using System.Threading.Tasks;
 
 namespace RestaurantMenu_WebApi.Controllers
@@ -24,8 +27,10 @@ namespace RestaurantMenu_WebApi.Controllers
             this._mapper = mapper;
         }
 
+
+
+
         //controller methods realization
-        //GET method
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -36,13 +41,57 @@ namespace RestaurantMenu_WebApi.Controllers
             return this.Ok(orders);
         }
 
-        //create
+
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] Orders orders)
+        public async Task<IActionResult> Create([FromBody] OrderModel orderModel)
         {
-            this._mapper.Map<Orders>(orders);
-            await this._orderService.AddAsync(orders);
+            var dbContext = new MenuDataContext();
+            dbContext.Add(new Orders()
+            {
+                OrderItemId = orderModel.OrderItemId,
+                CreationDateTime = orderModel.CreationDateTime,
+                GuestId = orderModel.GuestId,
+                TableNumber = orderModel.TableNumber
+            });
+            dbContext.SaveChanges();
+
             return this.Ok();
+        }
+
+        [HttpPut("{id:int}/edit")]
+        public async Task<IActionResult> Update([FromBody] OrderModel orderModel, [FromRoute] int id)
+        {
+            //var dbContext = new MenuDataContext();
+            //var result = dbContext.Update(Orders);
+
+            var order = this._mapper.Map<Orders>(orderModel);
+            await this._orderService.TryUpdateAsync(id, order);
+
+            return this.Ok();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var order = await this._orderService.GetByIdAsync(id);
+            if (order == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(order);
+        }
+
+        [HttpDelete("{id:int}/delete")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var orders = await this._orderService.GetByIdAsync(id);
+            if (orders != null)
+            {
+                await this._orderService.DeleteAsync(orders);
+                return this.Ok();
+            }
+            return this.NotFound();
         }
     }
 }

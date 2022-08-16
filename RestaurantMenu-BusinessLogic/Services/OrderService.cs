@@ -14,6 +14,10 @@ namespace RestaurantMenu_BusinessLogic.Services
         //it is the same as in OrderRepository
         Task<ICollection<Orders>> GetAllAsync();
         Task AddAsync(Orders orders);
+        Task UpdateAsync(Orders orders);
+        Task<bool> TryUpdateAsync(int id, Orders order);
+        Task<Orders> GetByIdAsync(int id);
+        Task DeleteAsync(Orders orders);
     }
     public class OrderService : IOrderService
     {
@@ -35,5 +39,31 @@ namespace RestaurantMenu_BusinessLogic.Services
 
         public Task AddAsync(Orders orders)
            => this._repository.AddAsync(orders);
+
+        public Task UpdateAsync(Orders orders)
+
+            => this._repository.UpdateAsync(orders);
+
+        public Task<Orders> GetByIdAsync(int id)
+           => this._repository.GetByIdAsync(id);
+
+        public async Task<bool> TryUpdateAsync(int id, Orders order)
+        {
+            var orderToUpdate = await this._repository.GetByIdAsync(id);
+            if (orderToUpdate != null)
+            {
+                orderToUpdate.CreationDateTime = order.CreationDateTime;
+                orderToUpdate.GuestId = order.GuestId;
+                orderToUpdate.TableNumber = order.TableNumber;
+
+                await this._repository.UpdateAsync(orderToUpdate);
+
+                return true;
+            }
+            return false;
+        }
+
+        public Task DeleteAsync(Orders orders)
+            => this._repository.DeleteAsync(orders);
     }
 }

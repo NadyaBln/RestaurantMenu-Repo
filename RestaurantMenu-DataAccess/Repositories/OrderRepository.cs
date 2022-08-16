@@ -11,6 +11,9 @@ namespace RestaurantMenu_DataAccess.Repositories
         //add each method in interface
         Task<ICollection<Orders>> GetAllAsync();
         Task AddAsync(Orders orders);
+        Task UpdateAsync(Orders orders);
+        Task<Orders> GetByIdAsync(int id);
+        Task DeleteAsync(Orders orders);
     }
     //OrderRepository - class which allows us to work with DB
     class OrderRepository : IOrderRepository
@@ -32,6 +35,23 @@ namespace RestaurantMenu_DataAccess.Repositories
         public async Task AddAsync(Orders orders)
         {
             await this._context.Orders.AddAsync(orders);
+        }
+
+        public async Task UpdateAsync(Orders orders)
+        {
+            this._context.Orders.Update(orders);
+            await this._context.SaveChangesAsync();
+        }
+
+        public async Task<Orders> GetByIdAsync(int id)
+        {
+            return await this._context.Orders.FirstOrDefaultAsync(x => x.OrderId == id);
+        }
+
+        public async Task DeleteAsync(Orders orders)
+        {
+            this._context.Orders.Remove(orders);
+            await this._context.SaveChangesAsync();
         }
     }
 }
