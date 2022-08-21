@@ -12,6 +12,9 @@ namespace RestaurantMenu_BusinessLogic
         {
             builder.RegisterModule<DataAccessRegistrationModule>();
             builder.RegisterType<OrderService>().As<IOrderService>();
+            builder.RegisterType<OrderItemService>().As<IOrderItemService>();
+            builder.RegisterType<ProductService>().As<IProductService>();
+            builder.RegisterType<GuestService>().As<IGuestService>();
         }
     }
 }

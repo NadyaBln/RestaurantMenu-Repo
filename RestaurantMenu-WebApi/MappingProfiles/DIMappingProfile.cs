@@ -11,6 +11,15 @@ namespace RestaurantMenu_WebApi.MappingProfiles
         {
             this.CreateMap<Orders, OrderModel>();
             this.CreateMap<OrderModel, Orders>();
+
+            this.CreateMap<Product, ProductModel>();
+            this.CreateMap<ProductModel, Product>();
+
+            this.CreateMap<Guest, GuestModel>();
+            this.CreateMap<GuestModel, Guest>();
+
+            this.CreateMap<OrderItem, OrderItemModel>();
+            this.CreateMap<OrderItemModel, OrderItem>();
         }
     }
 }

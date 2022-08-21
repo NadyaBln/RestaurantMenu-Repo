@@ -12,6 +12,7 @@ namespace RestaurantMenu_DataAccess
         //in table Category we use object Category
         public DbSet<Product> Product { get; set; }
         public DbSet<Orders> Orders { get; set; }
+        public DbSet<OrderItem> OrderItem { get; set; }
         public DbSet<Guest> Guest { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Allergen> Allergen { get; set; }
@@ -23,10 +24,16 @@ namespace RestaurantMenu_DataAccess
             //mapping settings for category and product
             modelBuilder.ApplyConfiguration(new ProductMapping());
             modelBuilder.ApplyConfiguration(new OrderMapping());
+            modelBuilder.ApplyConfiguration(new OrderItemMapping());
             modelBuilder.ApplyConfiguration(new GuestMapping());
             modelBuilder.ApplyConfiguration(new CategoryMapping());
             modelBuilder.ApplyConfiguration(new AllergenMapping());
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Orders>()
+                .HasOne(i => i.OrderItem)
+                .WithOne(i => i.Order)
+                .HasForeignKey<OrderItem>(b => b.OrderItemId);
         }
 
         //use Sql server with this connection string

@@ -1,9 +1,9 @@
 ﻿
-namespace RestaurantMenu_Entities.Entities
+namespace RestaurantMenu_WebApi.Models
 {
-    public class Product
+    public class ProductModel
     {
-        public int ProductId { get; set; }
+       // public int ProductId { get; set; }
         public string Title { get; set; }
         public int Calories { get; set; }
         public string Description { get; set; }

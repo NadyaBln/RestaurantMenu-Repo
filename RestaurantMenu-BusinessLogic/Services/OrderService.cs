@@ -53,7 +53,7 @@ namespace RestaurantMenu_BusinessLogic.Services
             if (orderToUpdate != null)
             {
                 orderToUpdate.CreationDateTime = order.CreationDateTime;
-                orderToUpdate.GuestId = order.GuestId;
+                orderToUpdate.Guest = order.Guest;
                 orderToUpdate.TableNumber = order.TableNumber;
 
                 await this._repository.UpdateAsync(orderToUpdate);

@@ -11,6 +11,8 @@ namespace RestaurantMenu_Entities.Mapping
         {
             builder.ToTable("Orders", "dbo");
             builder.HasKey(x => x.OrderId);
+            //builder.HasOne(x => x.OrderItem);
+            //builder.HasOne(x => x.Guest);
         }
-    }
+    }   
 }

@@ -11,6 +11,9 @@ namespace RestaurantMenu_DataAccess
         {
             builder.RegisterType<MenuDataContext>().AsSelf();
             builder.RegisterType<OrderRepository>().As<IOrderRepository>();
+            builder.RegisterType<OrderItemRepository>().As<IOrderItemRepository>();
+            builder.RegisterType<ProductRepository>().As<IProductRepository>();
+            builder.RegisterType<GuestRepository>().As<IGuestRepository>();
         }
     }
 }

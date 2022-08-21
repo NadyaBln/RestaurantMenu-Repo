@@ -9,22 +9,24 @@ using System.Threading.Tasks;
 namespace RestaurantMenu_WebApi.Controllers
 {
     [ApiController]
-    [Route("order")]
-    public class OrderController : ControllerBase
+    [Route("orderitem")]
+    public class OrderItemController : ControllerBase
     {
         //to use automapper we should use it as dependency
         private readonly IMapper _mapper;
 
         //and use Interface - Interface moves us to abstraction
         //add BL layer, that's why use OrderService
-        private readonly IOrderService _orderService;
+        private readonly IOrderItemService _orderItemService;
 
         //initialization via constructor
-        public OrderController(IOrderService orderService, IMapper mapper)
+        public OrderItemController(IOrderItemService orderItemService, IMapper mapper)
         {
-            this._orderService = orderService;
+            this._orderItemService = orderItemService;
             this._mapper = mapper;
         }
+
+
 
 
         //controller methods realization
@@ -32,26 +34,23 @@ namespace RestaurantMenu_WebApi.Controllers
         public async Task<IActionResult> Get()
         {
             //use repo from constructor
-            var orders = await this._orderService.GetAllAsync();
+            var orderItem = await this._orderItemService.GetAllAsync();
 
             //returns Orders in OK request 
-            return this.Ok(orders);
+            return this.Ok(orderItem);
         }
 
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] OrderModel orderModel)
+        public async Task<IActionResult> Create([FromBody] OrderItemModel orderItemModel)
         {
             var dbContext = new MenuDataContext();
-            dbContext.Add(new Orders()
+            dbContext.Add(new OrderItem()
             {
-                //OrderId = orderModel.OrderId,
-                OrderItem = orderModel.OrderItem,
-                //OrderItemId = orderModel.OrderItemId,
-                CreationDateTime = orderModel.CreationDateTime,
-                //GuestId = orderModel.GuestId,
-                Guest = orderModel.Guest,
-                TableNumber = orderModel.TableNumber
+                //OrderItemId = orderItemModel.OrderItemId,
+                Order = orderItemModel.Orders,
+                Product = orderItemModel.Product
+
             });
             dbContext.SaveChanges();
 
@@ -59,13 +58,13 @@ namespace RestaurantMenu_WebApi.Controllers
         }
 
         [HttpPut("{id:int}/edit")]
-        public async Task<IActionResult> Update([FromBody] OrderModel orderModel, [FromRoute] int id)
+        public async Task<IActionResult> Update([FromBody] OrderItemModel orderItemModel, [FromRoute] int id)
         {
             //var dbContext = new MenuDataContext();
             //var result = dbContext.Update(Orders);
 
-            var order = this._mapper.Map<Orders>(orderModel);
-            await this._orderService.TryUpdateAsync(id, order);
+            var orderItem = this._mapper.Map<OrderItem>(orderItemModel);
+            await this._orderItemService.TryUpdateAsync(id, orderItem);
 
             return this.Ok();
         }
@@ -73,22 +72,22 @@ namespace RestaurantMenu_WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var order = await this._orderService.GetByIdAsync(id);
-            if (order == null)
+            var orderItem = await this._orderItemService.GetByIdAsync(id);
+            if (orderItem == null)
             {
                 return this.NotFound();
             }
 
-            return this.Ok(order);
+            return this.Ok(orderItem);
         }
 
         [HttpDelete("{id:int}/delete")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var orders = await this._orderService.GetByIdAsync(id);
-            if (orders != null)
+            var orderItem = await this._orderItemService.GetByIdAsync(id);
+            if (orderItem != null)
             {
-                await this._orderService.DeleteAsync(orders);
+                await this._orderItemService.DeleteAsync(orderItem);
                 return this.Ok();
             }
             return this.NotFound();

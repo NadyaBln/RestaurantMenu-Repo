@@ -10,7 +10,6 @@ namespace RestaurantMenu_Entities.Mapping
         {
             builder.ToTable("Product", "dbo");
             builder.HasKey(x => x.ProductId);
-            //builder.HasOne(p => p.CategoryId).WithOne().HasForeignKey<Category>(p => p.CategoryId);
         }
     }
 }

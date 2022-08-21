@@ -1,7 +1,6 @@
-﻿
-namespace RestaurantMenu_Entities.Entities
+﻿namespace RestaurantMenu_WebApi.Models
 {
-   public class Guest
+    public class GuestModel
     {
         public int GuestId { get; set; }
         public string GuestName { get; set; }
