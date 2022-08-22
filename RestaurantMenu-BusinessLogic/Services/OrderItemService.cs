@@ -54,8 +54,10 @@ namespace RestaurantMenu_BusinessLogic.Services
             if (orderItemToUpdate != null)
             {
                // orderItemToUpdate.OrderItemId = orderItem.OrderItemId;
-                orderItemToUpdate.Product = orderItem.Product;
-                orderItemToUpdate.Order = orderItem.Order;
+                //orderItemToUpdate.Product = orderItem.Product;
+                orderItemToUpdate.ProductId = orderItem.ProductId;
+                //orderItemToUpdate.Order = orderItem.Order;
+                orderItemToUpdate.OrderId = orderItem.OrderId;
 
                 await this._repository.UpdateAsync(orderItemToUpdate);
 

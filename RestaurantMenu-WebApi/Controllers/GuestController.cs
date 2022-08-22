@@ -42,7 +42,7 @@ namespace RestaurantMenu_WebApi.Controllers
             var dbContext = new MenuDataContext();
             dbContext.Add(new Guest()
             {
-                GuestId = guestModel.GuestId,
+                //GuestId = guestModel.GuestId,
                 GuestName = guestModel.GuestName,
                 GuestEmail = guestModel.GuestEmail,
                 IsAdmin = guestModel.IsAdmin

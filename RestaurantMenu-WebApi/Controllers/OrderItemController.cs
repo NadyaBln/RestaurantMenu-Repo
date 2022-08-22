@@ -48,8 +48,10 @@ namespace RestaurantMenu_WebApi.Controllers
             dbContext.Add(new OrderItem()
             {
                 //OrderItemId = orderItemModel.OrderItemId,
-                Order = orderItemModel.Orders,
-                Product = orderItemModel.Product
+                //Order = orderItemModel.Orders,
+                OrderId = orderItemModel.OrderId,
+                //Product = orderItemModel.Product
+                ProductId = orderItemModel.ProductId
 
             });
             dbContext.SaveChanges();

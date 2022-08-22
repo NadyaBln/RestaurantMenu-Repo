@@ -31,9 +31,10 @@ namespace RestaurantMenu_DataAccess
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Orders>()
-                .HasOne(i => i.OrderItem)
-                .WithOne(i => i.Order)
-                .HasForeignKey<OrderItem>(b => b.OrderItemId);
+                .HasOne(i => i.OrderItem);
+                //.WithOne(i => i.Order)
+                //.WithOne(i => i.OrderItemId)
+                //.HasForeignKey<OrderItem>(b => b.OrderItemId);
         }
 
         //use Sql server with this connection string
