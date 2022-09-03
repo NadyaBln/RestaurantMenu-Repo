@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantMenu_Entities.Entities;
-using RestaurantMenu_Entities.Mapping;
 
 namespace RestaurantMenu_DataAccess
 {
@@ -21,20 +20,57 @@ namespace RestaurantMenu_DataAccess
         //set mapping for product and category
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //mapping settings for category and product
-            modelBuilder.ApplyConfiguration(new ProductMapping());
-            modelBuilder.ApplyConfiguration(new OrderMapping());
-            modelBuilder.ApplyConfiguration(new OrderItemMapping());
-            modelBuilder.ApplyConfiguration(new GuestMapping());
-            modelBuilder.ApplyConfiguration(new CategoryMapping());
-            modelBuilder.ApplyConfiguration(new AllergenMapping());
-            base.OnModelCreating(modelBuilder);
+            ////mapping settings for category and product
+            //modelBuilder.ApplyConfiguration(new ProductMapping());
+            //modelBuilder.ApplyConfiguration(new OrderMapping());
+            //modelBuilder.ApplyConfiguration(new OrderItemMapping());
+            //modelBuilder.ApplyConfiguration(new GuestMapping());
+            //modelBuilder.ApplyConfiguration(new CategoryMapping());
+            //modelBuilder.ApplyConfiguration(new AllergenMapping());
 
-            modelBuilder.Entity<Orders>()
-                .HasOne(i => i.OrderItem);
-                //.WithOne(i => i.Order)
-                //.WithOne(i => i.OrderItemId)
-                //.HasForeignKey<OrderItem>(b => b.OrderItemId);
+            modelBuilder.Entity<Allergen>().ToTable("Allergen", "dbo");
+            modelBuilder.Entity<Allergen>().HasKey(x => x.AllergenId);
+
+            modelBuilder.Entity<Category>().ToTable("Category", "dbo");
+            modelBuilder.Entity<Category>().HasKey(x => x.CategoryId);
+
+            modelBuilder.Entity<Guest>().ToTable("Guest", "dbo");
+            modelBuilder.Entity<Guest>().HasKey(x => x.GuestId);
+
+            modelBuilder.Entity<OrderItem>().ToTable("OrderItem", "dbo");
+            modelBuilder.Entity<OrderItem>().HasKey(x => x.OrderItemId);
+            ////1 to many
+            //modelBuilder.Entity<OrderItem>()
+            //     .HasOne(e => e.Products)
+            //     .WithMany(e => e.Items)
+            //     .HasForeignKey(e => e.ProductId);
+
+            // modelBuilder.Entity<OrderItem>()
+            //.HasMany(e => e.Products);
+            //.WithOne(e => e.OrderItem);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasMany<Product>(e => e.Products)
+                .WithMany(e => e.Items);
+
+            modelBuilder.Entity<Orders>().ToTable("Orders", "dbo");
+            modelBuilder.Entity<Orders>().HasKey(x => x.OrderId);
+            //modelBuilder.Entity<Orders>().HasOne(e => e.Guest);
+            //modelBuilder.Entity<Orders>()
+            //    .HasOne(e => e.OrderItem)
+            //    .WithOne(e => e.Order)
+            //    .HasForeignKey<Orders>(e => e.OrderItemId);
+
+            modelBuilder.Entity<Product>().ToTable("Product", "dbo");
+            modelBuilder.Entity<Product>()
+                .HasKey(x => x.ProductId);
+            //modelBuilder.Entity<Product>()
+            //    .HasOne<OrderItem>(e=>e.Items)
+
+
+
+
+            base.OnModelCreating(modelBuilder);
         }
 
         //use Sql server with this connection string

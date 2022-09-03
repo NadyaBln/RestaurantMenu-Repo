@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RestaurantMenu_Entities.Entities;
+﻿//using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore.Metadata.Builders;
+//using RestaurantMenu_Entities.Entities;
 
-namespace RestaurantMenu_Entities.Mapping
-{
-    public class ProductMapping : IEntityTypeConfiguration<Product>
-    {
-        public void Configure(EntityTypeBuilder<Product> builder)
-        {
-            builder.ToTable("Product", "dbo");
-            builder.HasKey(x => x.ProductId);
-        }
-    }
-}
+//namespace RestaurantMenu_Entities.Mapping
+//{
+//    public class ProductMapping : IEntityTypeConfiguration<Product>
+//    {
+//        public void Configure(EntityTypeBuilder<Product> builder)
+//        {
+//            builder.ToTable("Product", "dbo");
+//            builder.HasKey(x => x.ProductId);
+//        }
+//    }
+//}

@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace RestaurantMenu_Entities.Entities
 {
     public class Product
@@ -13,5 +15,8 @@ namespace RestaurantMenu_Entities.Entities
         public bool IsSeason { get; set; }
         public bool IsActive { get; set; }
         public int AllergenId { get; set; }
+        public virtual ICollection<OrderItem> Items { get; set; }
+       //public OrderItem OrderItem { get; set; }
+       //public int OrderItemId { get; set; }
     }
 }

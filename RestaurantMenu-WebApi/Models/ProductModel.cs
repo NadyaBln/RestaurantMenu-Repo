@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace RestaurantMenu_WebApi.Models
 {
     public class ProductModel
@@ -13,5 +15,6 @@ namespace RestaurantMenu_WebApi.Models
         public bool IsSeason { get; set; }
         public bool IsActive { get; set; }
         public int AllergenId { get; set; }
+        //public virtual ICollection<OrderItemModel> Items { get; set; }
     }
 }

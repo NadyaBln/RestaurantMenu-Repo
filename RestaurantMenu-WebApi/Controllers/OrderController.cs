@@ -29,7 +29,7 @@ namespace RestaurantMenu_WebApi.Controllers
 
         //controller methods realization
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetOrder()
         {
             //use repo from constructor
             var orders = await this._orderService.GetAllAsync();
@@ -42,19 +42,24 @@ namespace RestaurantMenu_WebApi.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] OrderModel orderModel)
         {
-            var dbContext = new MenuDataContext();
-            dbContext.Add(new Orders()
-            {
-                //OrderId = orderModel.OrderId,
-                OrderItem = orderModel.OrderItem,
-                //OrderItemId = orderModel.OrderItemId,
-                CreationDateTime = orderModel.CreationDateTime,
-                //GuestId = orderModel.GuestId,
-                Guest = orderModel.Guest,
-                TableNumber = orderModel.TableNumber
-            });
-            dbContext.SaveChanges();
+            //works
+            //var dbContext = new MenuDataContext();
+            //dbContext.Add(new OrderModel()
+            //{
+            //    //OrderId = orderModel.OrderId,
+            //    //OrderItem = orderModel.OrderItem,
+            //    OrderItemId = orderModel.OrderItemId,
+            //    CreationDateTime = orderModel.CreationDateTime,
+            //    GuestId = orderModel.GuestId,
+            //    //Guest = orderModel.Guest,
+            //    TableNumber = orderModel.TableNumber
+            //});
+            //dbContext.SaveChanges();
 
+            //return this.Ok();
+
+            var order = this._mapper.Map<Orders>(orderModel);
+            await this._orderService.AddAsync(order);
             return this.Ok();
         }
 
@@ -64,10 +69,17 @@ namespace RestaurantMenu_WebApi.Controllers
             //var dbContext = new MenuDataContext();
             //var result = dbContext.Update(Orders);
 
-            var order = this._mapper.Map<Orders>(orderModel);
-            await this._orderService.TryUpdateAsync(id, order);
+            //works
+            //var order = this._mapper.Map<Orders>(orderModel);
+            //await this._orderService.TryUpdateAsync(id, order);
 
-            return this.Ok();
+            //return this.Ok();
+
+
+            var order = this._mapper.Map<Orders>(orderModel);
+            var result = await this._orderService.TryUpdateAsync(id, order);
+
+            return result ? this.Ok() : this.NotFound();
         }
 
         [HttpGet("{id}")]

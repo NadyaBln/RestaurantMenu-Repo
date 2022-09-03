@@ -32,9 +32,10 @@ namespace RestaurantMenu_BusinessLogic.Services
         }
 
         //method calls method GetAllAsync from abstraction 
-        public Task<ICollection<OrderItem>> GetAllAsync()
+        public async Task<ICollection<OrderItem>> GetAllAsync()
         {
-            var orderItemFromRepository = this._repository.GetAllAsync();
+            var orderItemFromRepository = await this._repository.GetAllAsync();
+            var expected = orderItemFromRepository;
             return orderItemFromRepository;
         }
 
@@ -54,10 +55,10 @@ namespace RestaurantMenu_BusinessLogic.Services
             if (orderItemToUpdate != null)
             {
                // orderItemToUpdate.OrderItemId = orderItem.OrderItemId;
-                //orderItemToUpdate.Product = orderItem.Product;
-                orderItemToUpdate.ProductId = orderItem.ProductId;
-                //orderItemToUpdate.Order = orderItem.Order;
-                orderItemToUpdate.OrderId = orderItem.OrderId;
+                orderItemToUpdate.Products = orderItem.Products;
+                //orderItemToUpdate.ProductID = orderItem.ProductID;
+                orderItemToUpdate.Order = orderItem.Order;
+                //orderItemToUpdate.OrderId = orderItem.OrderId;
 
                 await this._repository.UpdateAsync(orderItemToUpdate);
 

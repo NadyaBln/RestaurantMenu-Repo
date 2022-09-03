@@ -44,18 +44,23 @@ namespace RestaurantMenu_WebApi.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] OrderItemModel orderItemModel)
         {
-            var dbContext = new MenuDataContext();
-            dbContext.Add(new OrderItem()
-            {
-                //OrderItemId = orderItemModel.OrderItemId,
-                //Order = orderItemModel.Orders,
-                OrderId = orderItemModel.OrderId,
-                //Product = orderItemModel.Product
-                ProductId = orderItemModel.ProductId
+            ////works
+            //var dbContext = new MenuDataContext();
+            //dbContext.Add(new OrderItemModel()
+            //{
+            //    OrderItemId = orderItemModel.OrderItemId,
+            //    Orders = orderItemModel.Orders,
+            //    OrderId = orderItemModel.OrderId,
+            //    Products = orderItemModel.Products
+            //    ProductId = orderItemModel.ProductId
 
-            });
-            dbContext.SaveChanges();
+            //});
+            //dbContext.SaveChanges();
 
+            //return this.Ok();
+
+            var orderItem = this._mapper.Map<OrderItem>(orderItemModel);
+            await this._orderItemService.AddAsync(orderItem);
             return this.Ok();
         }
 

@@ -29,7 +29,8 @@ namespace RestaurantMenu_DataAccess.Repositories
 
         public async Task<ICollection<OrderItem>> GetAllAsync()
         {
-            return (ICollection<OrderItem>)await this._context.OrderItem.ToListAsync();
+            //return (ICollection<OrderItem>)await this._context.OrderItem.ToListAsync();
+            return await this._context.OrderItem.ToListAsync();
         }
 
         public async Task AddAsync(OrderItem orderItem)

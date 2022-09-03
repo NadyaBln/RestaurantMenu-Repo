@@ -5,10 +5,12 @@ namespace RestaurantMenu_WebApi.Models
 {
     public class OrderItemModel : Controller
     {
-        //public int OrderItemId { get; set; }
+        public int? OrderItemId { get; set; }
         public int OrderId { get; set; }
-        //public Orders Orders { get; set; }
-       //public List<Product> Product { get; set; }
-        public int[] ProductId { get; set; }
+        //public virtual OrderModel Order { get; set; }
+        public int ProductId { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
+        
+        //public virtual ProductModel Product { get; set; }
     }
 }

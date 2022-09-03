@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace RestaurantMenu_Entities.Entities
 {
    public class Guest
@@ -7,5 +9,7 @@ namespace RestaurantMenu_Entities.Entities
         public string GuestName { get; set; }
         public string GuestEmail { get; set; }
         public bool IsAdmin { get; set; }
+       // public virtual ICollection<OrderItem> Items { get; set; }
+
     }
 }
